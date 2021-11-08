@@ -57,6 +57,7 @@ export const DetailScreen = ({
           style={{
             marginTop: -1 * 80,
             paddingHorizontal: 16,
+            width: '100%',
           }}>
           <View
             style={{
@@ -65,7 +66,7 @@ export const DetailScreen = ({
             <Image
               style={{
                 height: 180,
-                aspectRatio: 9 / 16,
+                aspectRatio: 9/16,
                 resizeMode: 'cover',
                 borderRadius: 6,
               }}
@@ -76,6 +77,7 @@ export const DetailScreen = ({
             <View
               style={{
                 padding: 8,
+                flex: 1,
               }}>
               <View
                 style={{
@@ -108,6 +110,9 @@ export const DetailScreen = ({
                   {item.snippet.channelTitle}
                 </Text>
                 <AirbnbRating
+                starContainerStyle={{
+                    alignSelf:'flex-start',
+                }}
                   showRating={false}
                   defaultRating={0}
                   selectedColor={'red'}
