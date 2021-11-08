@@ -3,6 +3,7 @@ import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {PlaylistItem} from '../../apis/models/PlaylistItem';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { Rating, AirbnbRating } from 'react-native-elements';
 
 export const DetailScreen = ({
   route,
@@ -80,10 +81,14 @@ export const DetailScreen = ({
                 }}>
                 <Text
                     style={{
-                      flexGrow: 8,
                     }}>
                     {item.snippet.channelTitle}
                   </Text>
+                  <AirbnbRating
+                    showRating={false}
+                    defaultRating={0}
+                    // onFinishRating={this.ratingCompleted}
+                    />
               </View>
             </View>
           </View>
