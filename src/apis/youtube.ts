@@ -2,6 +2,7 @@ import {YOUTUBE_API_KEY, YOUTUBE_CHANNEL_ID} from "@env"
 import axios from 'axios';
 import { Playlist } from "./models/Playlist";
 import { PlaylistItems } from "./models/PlaylistItem";
+import { Videos } from "./models/Video";
 
 export const playlistFetcher = (url: string) => axios.get<Playlist>("https://www.googleapis.com/youtube/v3/playlists/", {
     params: {
@@ -35,3 +36,11 @@ export const playlistItemsFetcher = async (url: string, list: any[]): Promise<an
         })
     })
 )
+
+export const videosFetcher = (url: string, videoIds: string[]) => axios.get<Videos>("https://www.googleapis.com/youtube/v3/videos/", {
+    params: {
+        key: YOUTUBE_API_KEY,
+        id: videoIds.join(','),
+        part: "snippet",
+    }
+}).then(item => item.data)

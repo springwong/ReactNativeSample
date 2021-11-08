@@ -30,6 +30,7 @@ const MovieGrid = (item: Item) => {
         onPress={() => {
           navigation.navigate('Detail', {
               ...item,
+              videoId: item.snippet.resourceId.videoId,
           });
         }}>
         <Image

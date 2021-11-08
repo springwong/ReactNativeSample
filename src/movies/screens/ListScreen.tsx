@@ -42,6 +42,7 @@ export const ListData = (item: any) => {
           onPress={() => {
             navigation.navigate('Detail', {
               ...item,
+              videoId: item.snippet.resourceId.videoId,
             });
           }}
           style={{

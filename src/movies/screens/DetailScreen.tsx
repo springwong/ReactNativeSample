@@ -14,18 +14,19 @@ export const DetailScreen = ({
   navigation,
 }: NativeStackScreenProps<any, any>) => {
   const item = route.params as PlaylistItem;
+  const videoId = route.params?.videoId;
   const [isFav, setIsFav] = useState(false);
   const dispatch = useDispatch();
   const likes = useSelector((state: RootState) => state.fav.likes);
   useEffect(() => {
-      setIsFav(likes.includes(item.snippet.resourceId.videoId))
+      setIsFav(likes.includes(videoId))
   }, [likes]);
 
   const stars = useSelector((state: RootState) => state.fav.stars);
   const [star, setStar] = useState(0);
   useEffect(() => {
-      if (stars[item.snippet.resourceId.videoId] !== undefined) {
-          setStar(stars[item.snippet.resourceId.videoId])
+      if (stars[videoId] !== undefined) {
+          setStar(stars[videoId])
       }
   }, [stars])
 
@@ -35,9 +36,9 @@ export const DetailScreen = ({
         <TouchableOpacity
           onPress={() => {
             if (isFav) {
-                dispatch(unlikeMovie(item.snippet.resourceId.videoId))
+                dispatch(unlikeMovie(videoId))
             } else {
-                dispatch(likeMovie(item.snippet.resourceId.videoId))
+                dispatch(likeMovie(videoId))
             }
           }}>
           <Image
@@ -141,7 +142,7 @@ export const DetailScreen = ({
                   selectedColor={'red'}
                   onFinishRating={(number: number) => {
                       dispatch(rateMovie({
-                        videoId: item.snippet.resourceId.videoId, 
+                        videoId: videoId, 
                         rating: number,
                       }))
                   }}
