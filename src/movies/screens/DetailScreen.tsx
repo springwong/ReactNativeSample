@@ -93,6 +93,7 @@ export const DetailScreen = ({
                 aspectRatio: 9 / 16,
                 resizeMode: 'cover',
                 borderRadius: 6,
+                zIndex: 100,
               }}
               source={{
                 uri: item.snippet.thumbnails.high.url,
@@ -110,13 +111,17 @@ export const DetailScreen = ({
                 }}>
                 <View
                   style={{
-                    backgroundColor: 'grey',
+                    backgroundColor: 'rgba(70, 70, 70, 0.6)',
                     borderRadius: 6,
-                    padding: 4,
+                    marginHorizontal: -50,
+                    paddingHorizontal: 50,
+                    paddingVertical: 8,
+                    zIndex: 0,
                   }}>
                   <Text
                     style={{
-                      flexGrow: 8,
+                      color: 'white',
+                      fontWeight: 'bold',
                     }}>
                     {item.snippet.title}
                   </Text>
@@ -150,7 +155,9 @@ export const DetailScreen = ({
               </View>
             </View>
           </View>
-          <Text>{item.snippet.description}</Text>
+          <Text style={{
+              color: 'grey'
+          }}>{item.snippet.description}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
