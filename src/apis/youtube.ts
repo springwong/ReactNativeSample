@@ -1,6 +1,7 @@
 import {YOUTUBE_API_KEY, YOUTUBE_CHANNEL_ID} from "@env"
 import axios from 'axios';
 import { Playlist } from "./models/Playlist";
+import { PlaylistItems } from "./models/PlaylistItem";
 
 export const playlistFetcher = (url: string) => axios.get<Playlist>("https://www.googleapis.com/youtube/v3/playlists/", {
     params: {
@@ -10,7 +11,7 @@ export const playlistFetcher = (url: string) => axios.get<Playlist>("https://www
     }
 })
 
-export const playlistItemFetcher = (url: string, playlistId: string) => axios.get<Playlist>("https://www.googleapis.com/youtube/v3/playlistItems/", {
+export const playlistItemFetcher = (url: string, playlistId: string) => axios.get<PlaylistItems>("https://www.googleapis.com/youtube/v3/playlistItems/", {
     params: {
         key: YOUTUBE_API_KEY,
         playlistId: playlistId,

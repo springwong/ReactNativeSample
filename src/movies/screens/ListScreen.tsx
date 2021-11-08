@@ -1,8 +1,11 @@
 import { View } from "react-native"
 import React from 'react';
+import useSWR from "swr";
+import { playlistFetcher } from "../../apis/youtube";
 
 export const ListScreen = () => {
-    return <View>
-
+    const {data, error, isValidating} = useSWR('/api/playlist', playlistFetcher);
+    return isValidating ? null : <View>
+        
     </View>
 }
