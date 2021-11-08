@@ -18,7 +18,7 @@ export const DetailScreen = ({
   const dispatch = useDispatch();
   const likes = useSelector((state: RootState) => state.fav.likes);
   useEffect(() => {
-      setIsFav(likes.includes(item.id))
+      setIsFav(likes.includes(item.snippet.resourceId.videoId))
   }, [likes]);
 
   React.useLayoutEffect(() => {
@@ -27,9 +27,9 @@ export const DetailScreen = ({
         <TouchableOpacity
           onPress={() => {
             if (isFav) {
-                dispatch(unlikeMovie(item.id))
+                dispatch(unlikeMovie(item.snippet.resourceId.videoId))
             } else {
-                dispatch(likeMovie(item.id))
+                dispatch(likeMovie(item.snippet.resourceId.videoId))
             }
           }}>
           <Image
