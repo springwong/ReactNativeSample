@@ -30,12 +30,13 @@ import {
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {store} from './src/store/store';
+import {store, persistor} from './src/store/store';
 import {Provider} from 'react-redux';
 import {SplashScreen} from './src/splash/screens/SplashScreen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {HomeScreen} from './src/home/screens/HomeScreen';
 import {DetailScreen} from './src/movies/screens';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const Stack = createNativeStackNavigator();
 
@@ -105,25 +106,31 @@ export const TemplateScreen = () => {
   );
 };
 
+
 const App = () => {
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}>
-            <Stack.Screen name="MovieSharing" component={SplashScreen} />
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen
-              name="Detail"
-              component={DetailScreen}
-              options={({ route }: any) => ({ title: route.params?.snippet?.title ?? "", headerShown: true })}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}>
+              <Stack.Screen name="MovieSharing" component={SplashScreen} />
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen
+                name="Detail"
+                component={DetailScreen}
+                options={({route}: any) => ({
+                  title: route.params?.snippet?.title ?? '',
+                  headerShown: true,
+                })}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </PersistGate>
     </Provider>
   );
 };

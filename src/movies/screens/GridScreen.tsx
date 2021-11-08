@@ -82,7 +82,7 @@ export const GridScreen = () => {
   return isValidating ? null : (
     <ScrollView>
       {data?.data.items.map(item => {
-        return <MovieGrid {...item} />;
+        return <MovieGrid {...item} key={item.id} />;
       })}
     </ScrollView>
   );
