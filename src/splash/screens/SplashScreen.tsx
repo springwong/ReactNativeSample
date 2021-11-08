@@ -1,11 +1,17 @@
-import React from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useEffect } from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import useSWR from 'swr';
-import {playlistFetcher} from '../../apis/youtube';
+import useSWR, { mutate } from 'swr';
+import {playlistFetcher, playlistItemFetcher} from '../../apis/youtube';
 
-export const SplashScreen = () => {
+export const SplashScreen = ({ route, navigation }: NativeStackScreenProps<any, any>) => {
   const {data, error} = useSWR('/api/playlist', playlistFetcher);
+  useEffect(() => {
+      if (data) {
+        navigation.replace('Home')
+      }
+  }, [data])
   return (
     <SafeAreaView
       edges={['right', 'bottom', 'left']}

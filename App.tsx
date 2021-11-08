@@ -34,6 +34,7 @@ import {store} from './src/store/store';
 import {Provider} from 'react-redux';
 import {SplashScreen} from './src/splash/screens/SplashScreen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { HomeScreen } from './src/home/screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,7 +66,7 @@ const Section: React.FC<{
   );
 };
 
-const TemplateScreen = () => {
+export const TemplateScreen = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -108,8 +109,11 @@ const App = () => {
     <Provider store={store}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{
+            headerShown: false,
+          }}>
             <Stack.Screen name="MovieSharing" component={SplashScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
