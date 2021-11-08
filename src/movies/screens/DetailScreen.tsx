@@ -7,7 +7,7 @@ import {Rating, AirbnbRating} from 'react-native-elements';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
-import { likeMovie, unlikeMovie } from '../../store/slices/favSlice';
+import { likeMovie, rateMovie, unlikeMovie } from '../../store/slices/favSlice';
 
 export const DetailScreen = ({
   route,
@@ -20,6 +20,14 @@ export const DetailScreen = ({
   useEffect(() => {
       setIsFav(likes.includes(item.snippet.resourceId.videoId))
   }, [likes]);
+
+  const stars = useSelector((state: RootState) => state.fav.stars);
+  const [star, setStar] = useState(0);
+  useEffect(() => {
+      if (stars[item.snippet.resourceId.videoId] !== undefined) {
+          setStar(stars[item.snippet.resourceId.videoId])
+      }
+  }, [stars])
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -129,9 +137,14 @@ export const DetailScreen = ({
                     alignSelf: 'flex-start',
                   }}
                   showRating={false}
-                  defaultRating={0}
+                  defaultRating={star}
                   selectedColor={'red'}
-                  // onFinishRating={this.ratingCompleted}
+                  onFinishRating={(number: number) => {
+                      dispatch(rateMovie({
+                        videoId: item.snippet.resourceId.videoId, 
+                        rating: number,
+                      }))
+                  }}
                 />
               </View>
             </View>

@@ -7,12 +7,12 @@ export interface StaredMovie {
 
 export interface CounterState {
   likes: string[];
-  stars: StaredMovie[];
+  stars: { [id: string]: number };
 }
 
 const initialState: CounterState = {
   likes: [],
-  stars: [],
+  stars: {},
 }
 
 export const favSlice = createSlice({
@@ -36,10 +36,21 @@ export const favSlice = createSlice({
         return state
       }
     },
+    rateMovie: (state, action: PayloadAction<{
+      videoId: string,
+      rating: number,
+    }>) => {
+      const newStars = {
+        ...state.stars,
+      }
+      newStars[action.payload.videoId] = action.payload.rating;
+      state.stars = newStars;
+      return state
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { likeMovie, unlikeMovie } = favSlice.actions
+export const { likeMovie, unlikeMovie, rateMovie } = favSlice.actions
 
 export default favSlice.reducer

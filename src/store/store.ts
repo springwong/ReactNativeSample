@@ -1,7 +1,6 @@
 import {
   combineReducers,
   configureStore,
-  getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 import favReducer from './slices/favSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
