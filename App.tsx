@@ -32,6 +32,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {store} from './src/store/store';
 import {Provider} from 'react-redux';
+import {SplashScreen} from './src/splash/screens/SplashScreen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 
@@ -104,11 +106,13 @@ const TemplateScreen = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={TemplateScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="MovieSharing" component={SplashScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
     </Provider>
   );
 };
