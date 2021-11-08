@@ -27,6 +27,11 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
+
 const Section: React.FC<{
   title: string;
 }> = ({children, title}) => {
@@ -55,7 +60,7 @@ const Section: React.FC<{
   );
 };
 
-const App = () => {
+const TemplateScreen = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -90,6 +95,16 @@ const App = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
+  );
+};
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={TemplateScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
