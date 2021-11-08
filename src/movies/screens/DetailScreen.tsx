@@ -1,14 +1,35 @@
-import {Image, ScrollView, Text, View} from 'react-native';
-import React from 'react';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {PlaylistItem} from '../../apis/models/PlaylistItem';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { Rating, AirbnbRating } from 'react-native-elements';
+import {Rating, AirbnbRating} from 'react-native-elements';
+import {Icon} from 'react-native-elements/dist/icons/Icon';
 
 export const DetailScreen = ({
   route,
   navigation,
 }: NativeStackScreenProps<any, any>) => {
+    const [isFav, setIsFav] = useState(false)
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={
+            () => {
+                setIsFav(!isFav)
+            }
+        }>
+          <Image
+            style={{
+              width: 20,
+              height: 20,
+            }}
+            source={isFav ? require('../../assets/favLight.png') : require('../../assets/favDisabled.png')}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, isFav]);
   const item = route.params as PlaylistItem;
   item.snippet.title;
   return (
@@ -80,15 +101,17 @@ export const DetailScreen = ({
                   height: 100,
                 }}>
                 <Text
-                    style={{
-                    }}>
-                    {item.snippet.channelTitle}
-                  </Text>
-                  <AirbnbRating
-                    showRating={false}
-                    defaultRating={0}
-                    // onFinishRating={this.ratingCompleted}
-                    />
+                  style={{
+                    color: 'grey',
+                    fontSize: 16,
+                  }}>
+                  {item.snippet.channelTitle}
+                </Text>
+                <AirbnbRating
+                  showRating={false}
+                  defaultRating={0}
+                  // onFinishRating={this.ratingCompleted}
+                />
               </View>
             </View>
           </View>
