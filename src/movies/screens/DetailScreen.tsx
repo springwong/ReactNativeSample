@@ -110,6 +110,7 @@ export const DetailScreen = ({
                 <AirbnbRating
                   showRating={false}
                   defaultRating={0}
+                  selectedColor={'red'}
                   // onFinishRating={this.ratingCompleted}
                 />
               </View>
