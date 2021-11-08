@@ -34,7 +34,8 @@ import {store} from './src/store/store';
 import {Provider} from 'react-redux';
 import {SplashScreen} from './src/splash/screens/SplashScreen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import { HomeScreen } from './src/home/screens/HomeScreen';
+import {HomeScreen} from './src/home/screens/HomeScreen';
+import {DetailScreen} from './src/movies/screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -109,11 +110,17 @@ const App = () => {
     <Provider store={store}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{
-            headerShown: false,
-          }}>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}>
             <Stack.Screen name="MovieSharing" component={SplashScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen
+              name="Detail"
+              component={DetailScreen}
+              options={({ route }: any) => ({ title: route.params?.snippet?.title ?? "", headerShown: true })}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
