@@ -18,3 +18,20 @@ export const playlistItemFetcher = (url: string, playlistId: string) => axios.ge
         part: "snippet",
     }
 })
+
+export const playlistItemsFetcher = async (url: string, list: any[]): Promise<any[]> => await Promise.all(
+    list.map(item => {
+        return axios.get<PlaylistItems>("https://www.googleapis.com/youtube/v3/playlistItems/", {
+            params: {
+                key: YOUTUBE_API_KEY,
+                playlistId: item.id,
+                part: "snippet",
+            }
+        }).then(res => {
+            return {
+                data: res.data.items,
+                title: item.title,
+            }
+        })
+    })
+)
