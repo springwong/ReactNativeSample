@@ -1,37 +1,52 @@
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {PlaylistItem} from '../../apis/models/PlaylistItem';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Rating, AirbnbRating} from 'react-native-elements';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
+import { likeMovie, unlikeMovie } from '../../store/slices/favSlice';
 
 export const DetailScreen = ({
   route,
   navigation,
 }: NativeStackScreenProps<any, any>) => {
-    const [isFav, setIsFav] = useState(false)
+  const item = route.params as PlaylistItem;
+  const [isFav, setIsFav] = useState(false);
+  const dispatch = useDispatch();
+  const likes = useSelector((state: RootState) => state.fav.likes);
+  useEffect(() => {
+      setIsFav(likes.includes(item.id))
+  }, [likes]);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={
-            () => {
-                setIsFav(!isFav)
+        <TouchableOpacity
+          onPress={() => {
+            if (isFav) {
+                dispatch(unlikeMovie(item.id))
+            } else {
+                dispatch(likeMovie(item.id))
             }
-        }>
+          }}>
           <Image
             style={{
               width: 20,
               height: 20,
             }}
-            source={isFav ? require('../../assets/favLight.png') : require('../../assets/favDisabled.png')}
+            source={
+              isFav
+                ? require('../../assets/favLight.png')
+                : require('../../assets/favDisabled.png')
+            }
           />
         </TouchableOpacity>
       ),
     });
   }, [navigation, isFav]);
-  const item = route.params as PlaylistItem;
-  item.snippet.title;
   return (
     <SafeAreaView
       edges={['right', 'bottom', 'left']}
@@ -66,7 +81,7 @@ export const DetailScreen = ({
             <Image
               style={{
                 height: 180,
-                aspectRatio: 9/16,
+                aspectRatio: 9 / 16,
                 resizeMode: 'cover',
                 borderRadius: 6,
               }}
@@ -110,9 +125,9 @@ export const DetailScreen = ({
                   {item.snippet.channelTitle}
                 </Text>
                 <AirbnbRating
-                starContainerStyle={{
-                    alignSelf:'flex-start',
-                }}
+                  starContainerStyle={{
+                    alignSelf: 'flex-start',
+                  }}
                   showRating={false}
                   defaultRating={0}
                   selectedColor={'red'}
